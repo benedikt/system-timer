@@ -1,6 +1,6 @@
 # Copyright 2008 David Vollbracht & Philippe Hanrigou
 
-if defined?(RUBY_ENGINE) and RUBY_ENGINE == "rbx"
+if RUBY_PLATFORM =~ /mswin|mingw/ or (defined?(RUBY_ENGINE) and RUBY_ENGINE == "rbx")
   require File.dirname(__FILE__) + '/system_timer_stub'
 else
 

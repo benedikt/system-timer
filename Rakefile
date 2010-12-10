@@ -63,8 +63,7 @@ specification = Gem::Specification.new do |s|
   s.authors = ["Philippe Hanrigou", "David Vollbracht"]
   if ENV['PACKAGE_FOR_WIN32'] || PLATFORM['win32'] 
     s.platform = Gem::Platform.new "mswin32"
-    s.files = FileList['lib/system_timer_stub.rb']
-    s.autorequire = "system_timer_stub"
+    s.files = FileList['lib/system_timer.rb', 'lib/system_timer_stub.rb']
   else
     s.platform = Gem::Platform::RUBY
     s.files = [ "COPYING", "LICENSE", "ChangeLog"] + 
