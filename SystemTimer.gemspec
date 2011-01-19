@@ -12,10 +12,10 @@ Gem::Specification.new do |s|
   else
     s.platform = Gem::Platform::RUBY
     s.files = [ "COPYING", "LICENSE", "ChangeLog"] + 
-                FileList['ext/**/*.c'] + 
-                FileList['ext/**/*.rb'] + 
-                FileList['lib/**/*.rb'] + 
-                FileList['test/**/*.rb']
+                Dir.glob('ext/**/*.c') + 
+                Dir.glob('ext/**/*.rb') + 
+                Dir.glob('lib/**/*.rb') + 
+                Dir.glob('test/**/*.rb')
     s.autorequire = "system_timer"
     s.extensions = ["ext/system_timer/extconf.rb"]
   end  
