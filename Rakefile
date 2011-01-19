@@ -14,16 +14,8 @@ CLOBBER.include '**/*.log'
 CLOBBER.include '**/Makefile'
 CLOBBER.include '**/extconf.h'
 
-SYSTEM_TIMER_VERSION = "1.2.1"
-SYSTEM_TIMER_GEM_NAME = "SystemTimer"
-
 desc 'Default: run unit tests.'
 task :default => :test
-
-desc 'Install the gem into the local gem repository' 
-task :install => 'package' do
-  sh "gem install ./pkg/#{SYSTEM_TIMER_GEM_NAME}-#{SYSTEM_TIMER_VERSION}.gem"
-end
 
 desc 'Test SystemTimer'
 Rake::TestTask.new(:test) do |t|
@@ -56,32 +48,13 @@ file 'ext/system_timer/libsystem_timer_native.so' => 'ext/system_timer/Makefile'
   fail "Make failed (status #{m})" unless $?.exitstatus == 0
 end
 
-specification = Gem::Specification.new do |s|
-  s.name = SYSTEM_TIMER_GEM_NAME
-  s.summary = "Set a Timeout based on signals, which are more reliable than Timeout. Timeout is based on green threads."
-  s.version = SYSTEM_TIMER_VERSION
-  s.authors = ["Philippe Hanrigou", "David Vollbracht"]
-  if ENV['PACKAGE_FOR_WIN32'] || PLATFORM['win32'] 
-    s.platform = Gem::Platform.new "mswin32"
-    s.files = FileList['lib/system_timer.rb', 'lib/system_timer_stub.rb']
-  else
-    s.platform = Gem::Platform::RUBY
-    s.files = [ "COPYING", "LICENSE", "ChangeLog"] + 
-                FileList['ext/**/*.c'] + 
-                FileList['ext/**/*.rb'] + 
-                FileList['lib/**/*.rb'] + 
-                FileList['test/**/*.rb']
-    s.autorequire = "system_timer"
-    s.extensions = ["ext/system_timer/extconf.rb"]
-  end  
-  s.require_path = "lib"
-  s.rdoc_options << '--title' << 'SystemTimer' << '--main' << 'README' << '--line-numbers'
-  s.has_rdoc = true
-  s.extra_rdoc_files = ['README']
-	s.test_file = "test/all_tests.rb"
-	s.rubyforge_project = "systemtimer"
+specification = Gem::Specification.load("SystemTimer.gemspec")
+
+desc 'Install the gem into the local gem repository' 
+task :install => 'package' do
+  sh "gem install ./pkg/#{specification.name}-#{specification.version}.gem"
 end
-  
+
 Rake::GemPackageTask.new(specification) do |package|
 	 package.need_zip = false
 	 package.need_tar = false
