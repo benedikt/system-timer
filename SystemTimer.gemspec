@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
   end  
   s.require_path = "lib"
   s.rdoc_options << '--title' << 'SystemTimer' << '--main' << 'README' << '--line-numbers'
-  s.has_rdoc = true
+
   s.extra_rdoc_files = ['README']
 	s.test_file = "test/all_tests.rb"
 	s.rubyforge_project = "systemtimer"
